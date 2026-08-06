@@ -1,0 +1,39 @@
+python run_speech_recognition_ctc.py \
+	--model_name_or_path="facebook/w2v-bert-2.0" \
+	--dataset_name="./waxal_lin_sna" \
+	--train_split_name="train" \
+	--eval_split_name="test" \
+	--text_column_name="transcription" \
+	--output_dir="./w2v-bert-2.0-waxal_lin_sna" \
+	--num_train_epochs="1" \
+	--per_device_train_batch_size="16" \
+	--per_device_eval_batch_size="16" \
+    --gradient_accumulation_steps="1" \
+	--freeze_feature_encoder=false \
+	--add_adapter=true \
+	--mask_time_prob="0.0" \
+	--final_dropout="0.1" \
+	--attention_dropout="0.05" \
+	--feat_proj_dropout="0.05" \
+	--hidden_dropout="0.05" \
+	--ctc_zero_infinity=true \
+	--learning_rate="3e-5" \
+	--warmup_ratio="0.1" \
+	--eval_strategy="steps" \
+	--save_steps="250" \
+	--eval_steps="250" \
+	--logging_steps="1" \
+	--eval_metrics wer cer \
+	--save_total_limit="2" \
+	--load_best_model_at_end \
+    --max_duration_in_seconds="20" \
+	--gradient_checkpointing \
+	--fp16 \
+	--group_by_length \
+	--length_column_name "input_length" \
+	--do_train --do_eval \
+	--preprocessing_num_workers="8" \
+	--dataloader_num_workers="8" \
+	--push_to_hub \
+	--hub_model_id="ayymen/w2v-bert-2.0-waxal_lin_sna-1epoch" \
+	--hub_strategy="checkpoint"
